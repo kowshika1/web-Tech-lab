@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop Bill Calculator</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center">Bill Calculator</h2>
+    
+    <div id="items">
+        <!-- Initial item fields -->
+        <div class="row mb-3 item">
+            <div class="col">
+                <label for="productNo">Product No:</label>
+                <input type="text" class="form-control productNo">
+            </div>
+            <div class="col">
+                <label for="quantity">Quantity:</label>
+                <input type="number" class="form-control quantity" step="1" value="0">
+            </div>
+            <div class="col">
+                <label for="price">Price:</label>
+                <input type="number" class="form-control price" step="0.01" value="0.00">
+            </div>
+            
+        </div>
+    </div>
+
+    <button class="btn btn-primary mb-3" onclick="addItem()">Add Item</button>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary btn-block" onclick="calculateBill()">Calculate Total</button>
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col">
+            <h4>Total Bill:</h4>
+            <div id="totalBill"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+function addItem() {
+    // Clone the template item and append it to the items container
+    var newItem = document.querySelector('.item').cloneNode(true);
+    document.getElementById('items').appendChild(newItem);
+}
+
+function calculateBill() {
+    var items = document.querySelectorAll('.item');
+    var totalBill = 0;
+
+    items.forEach(function(item) {
+        var quantity = parseInt(item.querySelector('.quantity').value);
+        var price = parseFloat(item.querySelector('.price').value);
+        if (!isNaN(quantity) && !isNaN(price)) {
+            totalBill += quantity * price;
+        }
+    });
+
+    // Display total bill
+    document.getElementById('totalBill').innerHTML = "$" + totalBill.toFixed(2);
+}
+</script>
+
+</body>
+</html>
